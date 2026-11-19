@@ -1,0 +1,19 @@
+{
+  "name": "PRINCE MINI",
+  "description": "Multi-user WhatsApp bot with web pairing and automatic updates.",
+  "keywords": ["whatsapp", "bot", "baileys"],
+  "env": {
+    "OWNER_NUMBER": { "description": "Your WhatsApp number with country code, digits only (e.g. 255712345678)", "required": true },
+    "UPDATE_REPO": { "description": "GitHub repo to pull updates from, e.g. yourname/prince (must be public for .update now on Heroku)", "required": true },
+    "UPDATE_BRANCH": { "description": "Branch to follow", "value": "main" },
+    "HEROKU_APP_NAME": { "description": "The name you give this Heroku app (needed for .update now)", "required": true },
+    "HEROKU_API_KEY": { "description": "Token from: heroku authorizations:create (keep it secret)", "required": true },
+    "GITHUB_WEBHOOK_SECRET": { "description": "Random secret you also paste into the GitHub webhook (enables instant deploy on push)", "required": false },
+    "TURNSTILE_SITEKEY": { "description": "Cloudflare Turnstile site key (human check on the pairing page)", "required": false },
+    "TURNSTILE_SECRET": { "description": "Cloudflare Turnstile secret key", "required": false },
+    "AUTO_UPDATE": { "description": "true = check GitHub automatically", "value": "true" },
+    "MAX_SESSIONS": { "description": "Max linked WhatsApp accounts", "value": "50" }
+  },
+  "addons": ["heroku-postgresql"],
+  "formation": { "web": { "quantity": 1, "size": "basic" } }
+}
