@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0d1512">
+<meta name="description" content="WhatsApp multi-device pairing — get your pair code in seconds.">
+<meta property="og:type" content="website"><meta property="og:title" content="PRINCE MINI · Web Pair">
+<meta property="og:description" content="Link your WhatsApp and get your bot online in seconds.">
+<meta property="og:image" content="https://princemin.vercel.app/assets/logo.jpg">
+<meta name="twitter:card" content="summary"><title>PRINCE MINI · Web Pair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Outfit:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@500;700&family=Noto+Sans+Devanagari:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--a:#22c55e;--on:#04170b;--btn:var(--a);--bad:#ff7a8a;--warn:#ffcf6b}
+[data-theme=dark]{--bg:color-mix(in srgb,var(--a) 6%,#090b0a);--card:color-mix(in srgb,var(--a) 9%,#101312);--how:color-mix(in srgb,var(--a) 14%,#101312);--line:color-mix(in srgb,var(--a) 26%,#161a18);--ico:color-mix(in srgb,var(--a) 20%,#101312);--inp:color-mix(in srgb,var(--a) 4%,#070908);--txt:#eef4f0;--mut:#9aa9a1;--g:var(--a)}
+[data-theme=light]{--bg:color-mix(in srgb,var(--a) 7%,#fff);--card:#fff;--how:color-mix(in srgb,var(--a) 10%,#fff);--line:color-mix(in srgb,var(--a) 25%,#fff);--ico:color-mix(in srgb,var(--a) 16%,#fff);--inp:#fff;--txt:#0e1a14;--mut:#58695f;--g:color-mix(in srgb,var(--a) 80%,#000);--bad:#d6334a;--warn:#b7791f}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--txt);font:16px/1.5 Outfit,"Noto Sans","Noto Sans Arabic","Noto Sans Devanagari",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;min-height:100dvh;overflow-x:hidden;
+ background:radial-gradient(900px 500px at 15% -10%,color-mix(in srgb,var(--a) 24%,transparent),transparent 60%),radial-gradient(700px 500px at 95% 10%,color-mix(in srgb,var(--a) 14%,transparent),transparent 60%),var(--bg);background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(color-mix(in srgb,var(--a) 7%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--a) 7%,transparent) 1px,transparent 1px);background-size:36px 36px;-webkit-mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 75%)}
+.app{position:relative;z-index:1;width:min(100%,480px);margin:0 auto;padding:max(14px,env(safe-area-inset-top)) 14px max(40px,env(safe-area-inset-bottom))}
+button{font:inherit;color:inherit;cursor:pointer}
+svg{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.top,.srvbtn,.how,.info,.res,.faq details,.stat,.langlist{background:color-mix(in srgb,var(--card) 86%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(0,0,0,.14)}
+
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--line);border-radius:20px;padding:10px 12px}
+.word,h1{font-family:Michroma,Outfit,sans-serif;font-weight:700;background:linear-gradient(90deg,var(--g),color-mix(in srgb,var(--a) 35%,#fff),var(--g));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:flow 6s linear infinite}
+@keyframes flow{to{background-position:200% 0}}
+.word{letter-spacing:.03em;font-size:clamp(12px,3.8vw,15px);white-space:nowrap}
+.chips{display:flex;gap:8px;position:relative}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--how);border-radius:999px;padding:8px 11px;font-size:13px;font-weight:600;white-space:nowrap}
+.chip svg{font-size:16px}
+.langlist{display:none;position:absolute;inset-inline-end:0;top:calc(100% + 8px);z-index:9;margin:0;padding:6px;list-style:none;min-width:160px;max-height:60vh;overflow:auto;border:1px solid var(--line);border-radius:14px}
+.langlist.open{display:block}
+.langlist button{width:100%;text-align:start;border:0;background:none;border-radius:10px;padding:9px 12px;font-weight:600}
+.langlist button:hover,.langlist button[aria-selected=true]{background:var(--how);color:var(--g)}
+.ann{display:none;margin:12px 0 0;border:1px solid var(--warn);background:var(--how);color:var(--warn);border-radius:16px;padding:11px 14px;font-weight:600;font-size:15px;text-align:center}
+.ann.show{display:block}
+
+.hero{text-align:center;margin:22px 0 18px}
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+.ring{width:150px;height:150px;border-radius:50%;margin:0 auto 14px;padding:5px;position:relative;isolation:isolate;background:conic-gradient(from var(--ang),var(--a),color-mix(in srgb,var(--a) 40%,#fff),color-mix(in srgb,var(--a) 55%,#000),var(--a));animation:spin 3s linear infinite}
+.ring::before{content:"";position:absolute;inset:-4px;border-radius:50%;background:inherit;filter:blur(14px);opacity:.5;z-index:-1}
+@keyframes spin{to{--ang:360deg}}
+.ring img{position:relative;width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--bg);display:block;background:var(--bg)}
+h1{font-size:clamp(24px,8vw,38px);margin:0;letter-spacing:.07em;line-height:1.15;font-weight:900}
+.tag{color:var(--mut);margin:8px 0 14px;font-size:clamp(15px,4.4vw,18px)}
+.ready{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);background:var(--how);border-radius:999px;padding:8px 20px;font-weight:700;color:var(--g)}
+.ready i{width:10px;height:10px;border-radius:50%;background:var(--g);box-shadow:0 0 10px var(--g)}
+.ready.bad{color:var(--bad)}.ready.bad i{background:var(--bad);box-shadow:0 0 10px var(--bad)}
+.ready.wait{color:var(--warn)}.ready.wait i{background:var(--warn);box-shadow:0 0 10px var(--warn)}
+.cust{color:var(--mut);font-size:15px;margin:12px 0 0;min-height:22px}.cust b{color:var(--g)}
+.dots{display:flex;justify-content:center;gap:12px;margin:14px 0 0}
+.dot{width:34px;height:34px;border-radius:50%;border:2px solid transparent;padding:0;outline:0}
+.dot[aria-pressed=true]{border-color:var(--txt);box-shadow:0 0 0 3px var(--bg) inset}
+.dot:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+
+.sec{display:block;color:var(--g);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:15px;margin:22px 2px 10px}
+.srvbtn{width:100%;display:flex;align-items:center;gap:14px;text-align:start;border:1px solid var(--line);border-radius:20px;padding:14px}
+.srvico{width:52px;height:52px;border-radius:16px;background:var(--ico);color:var(--g);display:grid;place-items:center;font-size:28px;flex:none}
+.srvtxt{flex:1;min-width:0}
+.srvtxt b{display:block;font-size:clamp(17px,5vw,21px);line-height:1.2}
+.srvtxt span{display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;color:var(--mut);font-size:15px}
+.sdot{width:11px;height:11px;border-radius:50%;background:var(--g);flex:none}
+.sdot.busy{background:var(--warn)}.sdot.full,.sdot.offline{background:var(--bad)}.sdot.checking{background:var(--mut)}
+.chev{font-size:22px;color:var(--mut);transition:transform .2s}
+.srvbtn[aria-expanded=true] .chev{transform:rotate(180deg)}
+.list{display:none;margin:8px 0 0;padding:6px;list-style:none;border:1px solid var(--line);background:var(--card);border-radius:18px}
+.list.open{display:block}
+.opt{width:100%;display:flex;align-items:center;gap:14px;text-align:start;border:0;background:none;border-radius:13px;padding:11px 12px}
+.opt:hover:not(:disabled),.opt[aria-selected=true]{background:var(--how)}
+.opt:disabled{opacity:.5;cursor:not-allowed}
+.opt.auto{font-weight:700;font-size:18px;padding:14px 12px}
+.pie{--p:0;--c:var(--g);width:64px;height:64px;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;flex:none}
+.pie b{width:50px;height:50px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:15px}
+.pie.busy{--c:var(--warn)}.pie.full,.pie.offline{--c:var(--bad)}.pie.checking{--c:var(--mut)}
+.opt .mid{flex:1;min-width:0}
+.opt .r1{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;font-size:clamp(18px,5.4vw,22px)}
+.opt .r1 em{font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g)}
+.opt .r1 em.busy{color:var(--warn)}.opt .r1 em.full,.opt .r1 em.offline{color:var(--bad)}.opt .r1 em.checking{color:var(--mut)}
+.opt small{color:var(--mut);font-size:14px;display:block;margin-top:2px}
+
+.how{margin-top:16px;border:1px solid var(--line);background:var(--how);border-radius:22px;padding:18px 18px 12px}
+.how h3{margin:0 0 10px;font-size:20px}
+.how ol{margin:0;padding-inline-start:26px;color:var(--mut);font-size:clamp(15px,4.3vw,17px)}
+.how li{margin:0 0 10px;padding-inline-start:2px}
+
+input,textarea{width:100%;border:1px solid var(--line);border-radius:18px;background:var(--inp);color:var(--txt);padding:16px 18px;font:600 clamp(20px,6vw,26px) Outfit,sans-serif;outline:none;letter-spacing:.02em;direction:ltr;text-align:start}
+input::placeholder,textarea::placeholder{color:var(--mut);opacity:.7}
+input:focus,textarea:focus{border-color:var(--g);box-shadow:0 0 0 4px color-mix(in srgb,var(--a) 16%,transparent)}
+.go{width:100%;margin-top:12px;border:0;border-radius:16px;background:var(--btn);color:var(--on);font-weight:700;font-size:clamp(14px,4vw,16px);letter-spacing:.02em;padding:13px;box-shadow:0 8px 26px color-mix(in srgb,var(--a) 25%,transparent);transition:filter .15s}
+.go:hover{filter:brightness(1.07)}.go:disabled{opacity:.6;cursor:wait}
+
+.res{display:none;margin-top:16px;border:1px solid var(--line);border-radius:20px;padding:16px}
+.res.show{display:block}
+.res h4{margin:0 0 4px;font-size:16px}.res p{margin:0;color:var(--mut);font-size:15px}
+.code{font-family:Michroma,Outfit,monospace;font-size:clamp(20px,7vw,32px);color:var(--g);letter-spacing:.12em;margin:12px 0 8px;word-break:break-word;direction:ltr}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+.copy{border:1px solid var(--line);background:var(--how);border-radius:12px;padding:7px 14px;font-weight:600;font-size:14px}
+.cd{color:var(--mut);font-size:14px}
+
+.links{display:flex;justify-content:center;gap:12px;margin:30px 0 22px;flex-wrap:wrap}
+.lk{display:grid;justify-items:center;gap:8px;color:var(--txt);text-decoration:none;font-weight:600;font-size:16px;width:84px;text-align:center;background:none;border:0;padding:0}
+.lk span{width:68px;height:68px;border-radius:22px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;font-size:30px;color:var(--g)}
+
+.info{border:1px solid var(--line);border-radius:24px;padding:18px}
+.info h3{margin:0 0 10px;color:var(--g);font-size:clamp(20px,6vw,25px)}
+.info p{margin:0 0 16px;color:var(--mut);font-size:clamp(15px,4.3vw,17px);line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.stat{display:flex;align-items:center;gap:10px;min-width:0;border:1px solid var(--line);border-radius:18px;padding:12px}
+.stat .si{width:40px;height:40px;border-radius:14px;background:var(--ico);color:var(--g);display:grid;place-items:center;font-size:24px;flex:none}
+.stat>div:last-child{min-width:0}
+.stat small{display:block;color:var(--mut);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:11px;line-height:1.2}
+.stat b{display:block;color:var(--g);font-size:clamp(18px,5.5vw,24px);line-height:1.2;white-space:nowrap}
+.faq{margin-top:16px}
+.faq details{border:1px solid var(--line);border-radius:16px;padding:0 16px;margin-bottom:8px}
+.faq summary{cursor:pointer;font-weight:700;padding:14px 0;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:'+';color:var(--g);font-size:20px;line-height:1}
+.faq details[open] summary::after{content:'–'}
+.faq details p{margin:0 0 14px;color:var(--mut);font-size:16px}
+.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:18px;grid-column:1/-1}
+
+button.lk{background:none;border:0;padding:0;cursor:pointer}
+.cf select{font:500 16px Outfit,sans-serif;width:100%;padding:12px 8px;border-radius:14px;border:1px solid var(--line);background:var(--inp);color:var(--txt);margin-bottom:10px;outline:none}
+.cf select:focus{border-color:var(--g)}
+.cf .ccrow{display:flex;gap:8px}
+.cf .ccrow select{flex:0 0 46%;min-width:0}
+.cf .ccrow input{flex:1;min-width:0}
+/* contact modal */
+.modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+.modal[hidden]{display:none}
+.cf{position:relative;width:min(100%,440px);background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.cf h3{margin:0 0 4px;color:var(--g);font-size:20px}
+.cf p{margin:0 0 12px;color:var(--mut);font-size:14px}
+.cf input,.cf textarea{font:500 16px Outfit,sans-serif;padding:12px 14px;border-radius:14px;margin-bottom:10px;letter-spacing:0;direction:inherit}
+.cf textarea{min-height:110px;resize:vertical}
+.cf .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.cf .btns{display:flex;gap:10px}
+.cf .btns button{flex:1;border-radius:14px;padding:12px;font-weight:700;font-size:15px;border:1px solid var(--line);background:var(--how)}
+.cf .btns .send{background:var(--btn);color:var(--on);border:0}
+.cf .btns button:disabled{opacity:.6}
+.cf .st{margin:10px 0 0;font-size:14px;min-height:20px;color:var(--mut)}
+.cf .st.ok{color:var(--g)}.cf .st.err{color:var(--bad)}
+
+@media(max-width:400px){.chip span{display:none}.chip{padding:9px 11px}.ring{width:120px;height:120px}.srvico{width:44px;height:44px;font-size:24px}.srvbtn{padding:12px;gap:10px}.lk{width:76px}.lk span{width:60px;height:60px;font-size:26px}.pie{width:56px;height:56px}.pie b{width:44px;height:44px;font-size:13px}}
+@media(min-width:700px){.app{width:min(100%,640px)}}
+@media(min-width:1000px){
+ .app{width:min(100%,1040px)}
+ .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;align-items:start}
+ .hero{margin-top:26px}.ring{width:170px;height:170px}.links{margin-top:20px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body><div class="app">
+
+<header class="top">
+  <span class="word">PRINCE MINI</span>
+  <div class="chips">
+    <ul class="langlist" id="langList" role="listbox"></ul>
+    <button class="chip" id="langBtn" type="button" aria-haspopup="listbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span data-i="language">Language</span></button>
+    <button class="chip" id="modeBtn" type="button" aria-label="Mode"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span data-i="mode">Mode</span></button>
+  </div>
+</header>
+<div class="ann" id="ann"></div>
+
+<div class="cols">
+<div class="colA">
+<section class="hero">
+  <div class="ring"><img id="logo" src="/assets/logo.jpg" alt="PRINCE MINI" width="150" height="150"></div>
+  <h1>PRINCE MINI</h1>
+  <p class="tag" data-i="tagline">WhatsApp multi-device pairing</p>
+  <div class="ready wait" id="ready"><i></i><span id="readyTxt">Checking servers…</span></div>
+  <p class="cust" id="cust"></p>
+  <div class="dots" id="dots" role="group" aria-label="Color"></div>
+</section>
+
+<span class="sec" data-i="selectServer">Select server</span>
+<button class="srvbtn" id="srvBtn" type="button" aria-expanded="false" aria-haspopup="listbox">
+  <div class="srvico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.01M7 17.5h.01"/></svg></div>
+  <div class="srvtxt"><b id="srvName">Select Server</b><span><i class="sdot checking" id="srvDot"></i><span id="srvLine">--</span></span></div>
+  <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+</button>
+<ul class="list" id="srvList" role="listbox"></ul>
+
+<form id="pairForm" autocomplete="off">
+  <span class="sec" data-i="numLabel">WhatsApp number</span>
+  <input id="number" name="number" inputmode="numeric" autocomplete="off" placeholder="255xxxxxxxxx" minlength="7" maxlength="15" required>
+  <div id="humanBox" style="display:none;margin-top:12px;min-height:65px"></div>
+  <button class="go" id="go" type="submit" data-i="btn">Get Pair Code</button>
+</form>
+
+<div class="res" id="res" aria-live="polite">
+  <h4 id="resT"></h4><p id="resB"></p>
+  <div class="code" id="resCode"></div>
+  <div class="row" id="resRow" style="display:none"><span class="cd" id="resCd"></span><button class="copy" id="copyBtn" type="button" data-i="copy">Copy</button></div>
+</div>
+</div>
+
+<div class="colB">
+<div class="how">
+  <h3 data-i="howTitle">How to link device</h3>
+  <ol>
+    <li data-i="s1">Enter your number with country code (example: 255xxxxxxxxx).</li>
+    <li data-i="s2">Select an available server under the limit of {n}.</li>
+    <li data-i="s3">Tap Get Pair Code.</li>
+    <li data-i="s4">Open WhatsApp > Linked Devices > Link a Device > Link with phone number.</li>
+    <li data-i="s5">Enter the code within 60 seconds.</li>
+  </ol>
+</div>
+
+<nav class="links" id="links"></nav>
+
+<section class="faq">
+  <span class="sec" data-i="faqTitle">Help</span>
+  <details><summary data-i="q1">I did not get a code</summary><p data-i="a1"></p></details>
+  <details><summary data-i="q2">WhatsApp says the code is wrong</summary><p data-i="a2"></p></details>
+  <details><summary data-i="q3">It says the device is already linked</summary><p data-i="a3"></p></details>
+  <details><summary data-i="q4">Which server should I pick?</summary><p data-i="a4"></p></details>
+</section>
+
+<section class="info" style="margin-top:16px">
+  <h3 data-i="infoTitle">Information</h3>
+  <p data-i="infoText"></p>
+  <div class="stats">
+    <div class="stat"><div class="si"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></div><div><small data-i="onlineNow">Online now</small><b id="stOnline">--</b></div></div>
+    <div class="stat"><div class="si"><svg viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M3 13v2M21 13v2"/></svg></div><div><small data-i="deployed">Bots deployed</small><b id="stDep">--</b></div></div>
+    <div class="stat"><div class="si"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div><div><small data-i="views">Page views</small><b id="stViews">--</b></div></div>
+    <div class="stat"><div class="si"><svg viewBox="0 0 24 24"><path d="M6 20V12M12 20V5M18 20v-5"/></svg></div><div><small data-i="pairs">Pair requests</small><b id="stPairs">--</b></div></div>
+  </div>
+</section>
+</div>
+<footer class="foot">© <span id="year"></span> PRINCE MINI · engraved by PRINCE</footer>
+</div>
+</div>
+
+<!-- Support form: the message is sent by the bot server to the owner's WhatsApp; the visitor never leaves the page -->
+<div class="modal" id="cm" hidden>
+  <form class="cf" id="cf" autocomplete="off">
+    <h3 data-i="cTitle">Message the owner</h3>
+    <p data-i="cNote">Write your problem here. It goes straight to the owner.</p>
+    <input id="cf_name" maxlength="40" data-ph="cName" placeholder="Your name (optional)">
+    <div class="ccrow">
+      <select id="cf_cc" aria-label="Country code"></select>
+      <input id="cf_num" inputmode="numeric" maxlength="15" data-ph="cNum" placeholder="WhatsApp number">
+    </div>
+    <textarea id="cf_msg" maxlength="500" required data-ph="cMsg" placeholder="Your problem…"></textarea>
+    <input class="hp" id="cf_web" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="btns"><button type="button" id="cf_x" data-i="cCancel">Close</button><button type="submit" class="send" id="cf_go" data-i="cSend">Send</button></div>
+    <p class="st" id="cf_st" aria-live="polite"></p>
+  </form>
+</div>
+
+<script>
+/* ───────────── SETTINGS ───────────── */
+const SERVERS = [
+  { id: 's1', name: 'Server 1', url: 'https://pserver1-f0745103802a.herokuapp.com' },
+  { id: 's2', name: 'Server 2', url: 'https://pserver2-cbafd4933d14.herokuapp.com' },
+  { id: 's3', name: 'Server 3', url: 'https://psrrver3-118cf0a47160.herokuapp.com' },
+  { id: 's4', name: 'Server 4', url: 'https://pserver4-180f6772e03a.herokuapp.com' },
+  { id: 's5', name: 'Server 5', url: 'https://pserver5-cb65079ca276.herokuapp.com' },
+  { id: 's6', name: 'Server 6', url: 'https://pserver6-b11a33bbeb84.herokuapp.com' },
+  { id: 's7', name: 'Server 7', url: 'https://pserver7-5e02c94cb1c9.herokuapp.com' },
+  { id: 's8', name: 'Server 8', url: 'https://pserver8-ea1130cbd24e.herokuapp.com' },
+  { id: 's9', name: 'Server 9', url: 'https://pserver9-7fea5f60b1ac.herokuapp.com' },
+  { id: 's10', name: 'Server 10', url: 'https://pserver10-7c602c8f65b7.herokuapp.com' },
+];
+const LINKS = {
+  host:    '',
+  support: 'https://t.me/abdulimajid',     // Support -> Telegram
+  channel: 'https://whatsapp.com/channel/0029Vb6B9xFCxoAseuG1g610',
+  github:  '',
+  tutorial:''
+};                                          // Owner = in-page contact form (no direct WhatsApp link)
+const OWNER_NUMBER = '255614545735';        // owner WhatsApp (digits only) - contact form opens a chat with this number
+const REFRESH_MS = 20000;
+const CONTACT_COOLDOWN_MS = 60000;          // anti-spam: 1 message per minute per visitor
+const ANNOUNCEMENT = { en: '', sw: '' };    // leave empty to hide
+
+/* ───────────── LANGUAGES ───────────── */
+const T = {
+ en:{onlineNow:'Online now',custLine:'{a} people linked · {b} online now',accent:'Color',language:'Language',mode:'Mode',tagline:'WhatsApp multi-device pairing',ready:'Server Ready',checking:'Checking servers…',none:'No server available',
+  selectServer:'Select server',active:'Active',limit:'Limit',filled:'{p}% full',uptime:'Uptime',howTitle:'How to link device',
+  s1:'Enter your number with country code (example: 255xxxxxxxxx).',s2:'Select an available server under the limit of {n}.',s3:'Tap Get Pair Code.',
+  s4:'Open WhatsApp > Linked Devices > Link a Device > Link with phone number.',s5:'Enter the code within 60 seconds.',
+  numLabel:'WhatsApp number',btn:'Get Pair Code',busy:'Requesting…',again:'Get another code',retry:'Try again',
+  support:'Support',faqTitle:'Help',
+  q1:'I did not get a code',a1:'Check the number has the country code and no + or spaces, wait up to 30 seconds, then try again. If one server fails, the page automatically tries the next available server.',
+  q2:'WhatsApp says the code is wrong',a2:'Codes expire after about 60 seconds. Request a fresh code and enter it right away, on the same phone number you typed here.',
+  q3:'It says the device is already linked',a3:'This number already has a saved session, so no new code is needed. If the bot does not respond, remove the old linked device in WhatsApp and pair again.',
+  q4:'Which server should I pick?',a4:'Leave it on Auto. The page picks the server with the most free space for you.',
+  host:'Host Bot',auto:'Auto (best server)',linkedT:'Connected ✓',linkedB:'Your WhatsApp is linked and the bot is now online.',owner:'Owner',channel:'Channel',github:'GitHub',tutorial:'Tutorial',
+  infoTitle:'Information',infoText:'Theme and language stay saved in your browser. The number field clears on refresh for privacy. Deployed bots, page views and pair requests are public totals for everyone. Each server has its own limit of {n} bots.',
+  deployed:'Bots deployed',views:'Page views',pairs:'Pair requests',
+  online:'Online',almost:'Almost full',full:'Full',offline:'Offline',inspect:'Checking',nodata:'No data',users:'bots',connected:'connected now',
+  badNumT:'Check the number',badNumB:'Enter 7–15 digits, including your country code.',
+  humanT:'Human check',humanB:'Please complete the human check above, then try again.',
+  pickT:'Select Server',pickB:'This server is not available. Pick another one.',
+  prepT:'Preparing your code',prepB:'Connecting to {s}. Keep this page open.',
+  failoverT:'Trying another server',failoverB:'{a} did not respond. Switching to {b} automatically…',
+  accT:'Request accepted',accB:'Waiting for WhatsApp to generate a fresh code…',
+  recT:'Recovering saved session',recB:'This number already has saved credentials. Reconnecting safely before requesting a new code…',
+  codeT:'Your pairing code',codeB:'Use this code only in WhatsApp on the phone you are linking. WhatsApp → Linked devices → Link a device → Link with phone number.',
+  pairedT:'Device already linked',pairedB:'The saved WhatsApp session is connected. No new code is needed.',
+  failT:'Pairing failed',failB:'All available servers failed to generate a code. Please try again shortly.',
+  waitT:'Still waiting',waitB:'No code arrived yet. Try again shortly.',errT:'Could not start pairing',
+  copy:'Copy',copied:'Copied ✓',exp:'Expires in {s}s',expired:'Code expired — request a new one',
+  cTitle:'Message the owner',cNote:'Write your problem here. It goes straight to the owner on WhatsApp.',cName:'Your name (optional)',cNum:'Your WhatsApp number (so I can reply)',cMsg:'Your problem…',
+  cSend:'Send',cCancel:'Close',cSending:'Sending…',cSent:'Sent ✓ The owner will receive your message on WhatsApp.',cFail:'Could not send. Try again or use Telegram.',cWait:'Please wait a minute before sending another message.',cShort:'Write at least 5 characters.',cNumBad:'Enter a valid number (7–15 digits).'},
+ sw:{onlineNow:'Online sasa',custLine:'Watu {a} wameunganisha · {b} online sasa',accent:'Rangi',language:'Lugha',mode:'Mandhari',tagline:'Kuunganisha WhatsApp (multi-device)',ready:'Server Iko Tayari',checking:'Inakagua server…',none:'Hakuna server inayopatikana',
+  selectServer:'Chagua server',active:'Active',limit:'Kikomo',filled:'{p}% imejaa',uptime:'Uptime',howTitle:'Jinsi ya kuunganisha kifaa',
+  s1:'Weka namba yako pamoja na country code (mfano: 255xxxxxxxxx).',s2:'Chagua server iliyo chini ya kikomo cha {n}.',s3:'Bonyeza Get Pair Code.',
+  s4:'Fungua WhatsApp > Linked Devices > Link a Device > Link with phone number.',s5:'Ingiza code ndani ya sekunde 60.',
+  numLabel:'Namba ya WhatsApp',btn:'Pata Pair Code',busy:'Inaomba…',again:'Pata code nyingine',retry:'Jaribu tena',
+  support:'Msaada',faqTitle:'Msaada',
+  q1:'Sijapata code',a1:'Hakikisha namba ina country code bila + wala nafasi, subiri hadi sekunde 30, kisha jaribu tena. Server moja ikishindwa, ukurasa unajaribu server nyingine inayopatikana kiotomatiki.',
+  q2:'WhatsApp inasema code si sahihi',a2:'Code inaisha baada ya sekunde 60 hivi. Omba code mpya na uiweke mara moja, kwenye namba ileile uliyoiandika hapa.',
+  q3:'Inasema kifaa kimeshaunganishwa',a3:'Namba hii ina session iliyohifadhiwa, kwa hiyo huhitaji code mpya. Bot isipojibu, ondoa kifaa cha zamani kwenye Linked Devices ya WhatsApp kisha unganisha tena.',
+  q4:'Nichague server ipi?',a4:'Acha kwenye Auto. Ukurasa unachagua server yenye nafasi zaidi kwa ajili yako.',
+  host:'Host Bot',auto:'Auto (server bora)',linkedT:'Imeunganishwa ✓',linkedB:'WhatsApp yako imeunganishwa na bot iko online sasa.',owner:'Mmiliki',channel:'Channel',github:'GitHub',tutorial:'Mafunzo',
+  infoTitle:'Taarifa',infoText:'Mandhari na lugha vinahifadhiwa kwenye browser yako. Sehemu ya namba hujifuta ukirefresh kwa usiri. Bots zilizodeploy, page views na pair requests ni jumla za wazi kwa kila mtu. Kila server ina kikomo chake cha bots {n}.',
+  deployed:'Bots zilizodeploy',views:'Page views',pairs:'Pair requests',
+  online:'Online',almost:'Karibu kujaa',full:'Imejaa',offline:'Offline',inspect:'Inakagua',nodata:'Hakuna data',users:'bots',connected:'zimeunganishwa sasa',
+  badNumT:'Hakiki namba',badNumB:'Weka tarakimu 7–15, pamoja na country code.',
+  humanT:'Uthibitisho wa binadamu',humanB:'Kamilisha uthibitisho hapo juu kisha jaribu tena.',
+  pickT:'Chagua Server',pickB:'Server hii haipatikani. Chagua nyingine.',
+  prepT:'Inaandaa code yako',prepB:'Inaunganishwa na {s}. Acha ukurasa huu wazi.',
+  failoverT:'Inajaribu server nyingine',failoverB:'{a} haikujibu. Inahamia {b} kiotomatiki…',
+  accT:'Ombi limekubaliwa',accB:'Inasubiri WhatsApp itengeneze code mpya…',
+  recT:'Inarejesha session iliyohifadhiwa',recB:'Namba hii ina session iliyohifadhiwa. Inaunganisha upya kabla ya kuomba code mpya…',
+  codeT:'Pairing code yako',codeB:'Tumia code hii kwenye WhatsApp ya simu unayounganisha tu. WhatsApp → Linked devices → Link a device → Link with phone number.',
+  pairedT:'Kifaa kimeshaunganishwa',pairedB:'Session ya WhatsApp imeunganishwa. Huhitaji code mpya.',
+  failT:'Pairing imeshindwa',failB:'Server zote zilizopo zimeshindwa kutengeneza code. Jaribu tena baadaye kidogo.',
+  waitT:'Bado inasubiri',waitB:'Code haijafika bado. Jaribu tena baadaye kidogo.',errT:'Imeshindwa kuanza pairing',
+  copy:'Nakili',copied:'Imenakiliwa ✓',exp:'Inaisha baada ya {s}s',expired:'Code imeisha muda — omba nyingine',
+  cTitle:'Mwandikie mmiliki',cNote:'Andika shida yako hapa. Inamfikia mmiliki moja kwa moja kwenye WhatsApp.',cName:'Jina lako (si lazima)',cNum:'Namba yako ya WhatsApp (ili nikujibu)',cMsg:'Shida yako…',
+  cSend:'Tuma',cCancel:'Funga',cSending:'Inatuma…',cSent:'Imetumwa ✓ Ujumbe umefika kwa mmiliki kwenye WhatsApp.',cFail:'Imeshindwa kutuma. Jaribu tena au tumia Telegram.',cWait:'Subiri dakika moja kabla ya kutuma ujumbe mwingine.',cShort:'Andika angalau herufi 5.',cNumBad:'Weka namba sahihi (tarakimu 7–15).'}
+};
+const K='language,mode,tagline,ready,none,selectServer,active,limit,howTitle,numLabel,btn,copy,online,almost,full,offline,filled,codeT,auto'.split(',');
+const add=(l,s)=>{T[l]=Object.fromEntries(s.split('|').map((v,i)=>[K[i],v]))};
+add('ar','اللغة|المظهر|ربط واتساب (متعدد الأجهزة)|الخادم جاهز|لا يوجد خادم متاح|اختر الخادم|نشط|الحد|كيفية ربط الجهاز|رقم واتساب|الحصول على رمز الربط|نسخ|متصل|شبه ممتلئ|ممتلئ|غير متصل|{p}% ممتلئ|رمز الربط الخاص بك|تلقائي (أفضل خادم)');
+add('fr','Langue|Mode|Association WhatsApp (multi-appareils)|Serveur prêt|Aucun serveur disponible|Choisir le serveur|Actifs|Limite|Comment lier l’appareil|Numéro WhatsApp|Obtenir le code|Copier|En ligne|Presque plein|Plein|Hors ligne|{p} % rempli|Votre code d’association|Auto (meilleur serveur)');
+add('hi','भाषा|मोड|WhatsApp मल्टी-डिवाइस पेयरिंग|सर्वर तैयार है|कोई सर्वर उपलब्ध नहीं|सर्वर चुनें|सक्रिय|सीमा|डिवाइस कैसे लिंक करें|WhatsApp नंबर|पेयर कोड पाएँ|कॉपी|ऑनलाइन|लगभग भरा|भरा हुआ|ऑफ़लाइन|{p}% भरा|आपका पेयरिंग कोड|ऑटो (सबसे अच्छा सर्वर)');
+add('es','Idioma|Modo|Vinculación multidispositivo de WhatsApp|Servidor listo|Ningún servidor disponible|Elegir servidor|Activos|Límite|Cómo vincular el dispositivo|Número de WhatsApp|Obtener código|Copiar|En línea|Casi lleno|Lleno|Sin conexión|{p}% lleno|Tu código de vinculación|Auto (mejor servidor)');
+add('pt','Idioma|Modo|Pareamento multidispositivo do WhatsApp|Servidor pronto|Nenhum servidor disponível|Escolher servidor|Ativos|Limite|Como vincular o dispositivo|Número do WhatsApp|Obter código|Copiar|Online|Quase cheio|Cheio|Offline|{p}% cheio|Seu código de pareamento|Auto (melhor servidor)');
+add('id','Bahasa|Mode|Pairing multi-perangkat WhatsApp|Server siap|Tidak ada server tersedia|Pilih server|Aktif|Batas|Cara menautkan perangkat|Nomor WhatsApp|Dapatkan kode|Salin|Online|Hampir penuh|Penuh|Offline|{p}% terisi|Kode pairing Anda|Auto (server terbaik)');
+add('tr','Dil|Mod|WhatsApp çoklu cihaz eşleştirme|Sunucu hazır|Uygun sunucu yok|Sunucu seç|Aktif|Limit|Cihaz nasıl bağlanır|WhatsApp numarası|Kodu al|Kopyala|Çevrimiçi|Neredeyse dolu|Dolu|Çevrimdışı|%{p} dolu|Eşleştirme kodunuz|Otomatik (en iyi sunucu)');
+add('ru','Язык|Режим|Привязка WhatsApp (мульти-устройство)|Сервер готов|Нет доступных серверов|Выберите сервер|Активно|Лимит|Как привязать устройство|Номер WhatsApp|Получить код|Копировать|Онлайн|Почти заполнен|Заполнен|Не в сети|Занято {p}%|Ваш код привязки|Авто (лучший сервер)');
+
+const LANGS = { en:'English', sw:'Kiswahili', ar:'العربية', fr:'Français', hi:'हिन्दी', es:'Español', pt:'Português', id:'Bahasa Indonesia', tr:'Türkçe', ru:'Русский' };
+const RTL = ['ar'];
+const ACCENTS = { green:['#22c55e','#04170b'], blue:['#3b82f6','#fff'], purple:['#a855f7','#fff'], orange:['#f97316','#1a0a00'], pink:['#ec4899','#fff'], red:['#ef4444','#fff'], teal:['#14b8a6','#02130f'] };
+
+const $ = (id) => document.getElementById(id);
+let lang = 'en', theme = 'dark', accent = 'green', selectedId = null, pollTimer, cdTimer, busy = false, resState = null, runId = 0, hitDone = false;
+const ls = { get(k){ try { return localStorage.getItem(k) } catch (_) { return null } }, set(k,v){ try { localStorage.setItem(k,v) } catch (_) {} } };
+{ const q = new URLSearchParams(location.search).get('lang'), nav = ((navigator.language || 'en').slice(0, 2)).toLowerCase();
+  lang = [q, ls.get('nexus_lang'), nav].find((x) => x && T[x]) || 'en'; }
+theme = ['dark','light'].includes(ls.get('nexus_theme')) ? ls.get('nexus_theme') : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+if (ACCENTS[ls.get('nexus_accent')]) accent = ls.get('nexus_accent');
+let auto = ls.get('nexus_auto') !== '0';
+selectedId = ls.get('nexus_server');
+if (!SERVERS.some((s) => s.id === selectedId)) selectedId = SERVERS[0].id;
+
+const t = (k, p = {}) => (T[lang][k] ?? T.en[k] ?? k).replace(/\{(\w+)\}/g, (_, x) => p[x] ?? '');
+const stats = {}; SERVERS.forEach((s) => (stats[s.id] = { state: 'checking' }));
+const cur = () => SERVERS.find((s) => s.id === selectedId);
+const usable = (id) => ['online','busy'].includes(stats[id].state);
+const loadOf = (s) => (stats[s.id].capacity ? stats[s.id].total / stats[s.id].capacity : 1);
+const best = () => SERVERS.filter((s) => usable(s.id) && stats[s.id].capacity).sort((a, b) => loadOf(a) - loadOf(b))[0];
+const num = (n) => (n == null ? '--' : Number(n).toLocaleString(lang));
+const capacityHint = () => { const k = SERVERS.map((s) => stats[s.id].capacity).find(Boolean); return k || '--'; };
+const pctOf = (x) => (x.capacity ? Math.min(100, Math.round(x.total / x.capacity * 100)) : 0);
+const normDigits = (s) => s.replace(/[٠-٩]/g, (d) => d.charCodeAt(0) - 1632).replace(/[۰-۹]/g, (d) => d.charCodeAt(0) - 1776).replace(/[०-९]/g, (d) => d.charCodeAt(0) - 2406);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const apiOf = (s) => s.url.replace(/\/$/, '');
+// ── Human check (Cloudflare Turnstile) ──
+let humanOn = false, humanToken = '', humanPass = '', humanPassExp = 0, humanWidget = null;
+(async () => {
+  try {
+    const c = await (await fetch('/api/captcha', { cache: 'no-store' })).json();
+    if (!c.enabled || !c.sitekey) return;
+    humanOn = true; $('humanBox').style.display = 'block';
+    const s = document.createElement('script');
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async = true;
+    s.onload = () => { humanWidget = turnstile.render('#humanBox', { sitekey: c.sitekey, callback: (tk) => { humanToken = tk; }, 'expired-callback': () => { humanToken = ''; }, 'error-callback': () => { humanToken = ''; } }); };
+    document.head.appendChild(s);
+  } catch (_) {}
+})();
+// returns a valid pass ('' when the check is off) or null when the visitor still has to solve it
+async function getPass(){
+  if (!humanOn) return '';
+  if (humanPass && Date.now() < humanPassExp - 15000) return humanPass;
+  if (!humanToken) return null;
+  const tk = humanToken; humanToken = '';
+  try {
+    const r = await fetch('/api/verify', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ token: tk }), signal: AbortSignal.timeout(15000) });
+    const d = await r.json().catch(() => ({}));
+    if (r.ok && d.pass) { humanPass = d.pass; humanPassExp = Date.now() + 9 * 60000; return humanPass; }
+  } catch (_) {}
+  try { turnstile.reset(humanWidget); } catch (_) {}
+  return null;
+}
+
+
+function fmtUp(s){
+  if (s == null || isNaN(s)) return '--';
+  s = Math.max(0, Math.floor(s));
+  const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60);
+  return d ? d + 'd ' + h + 'h' : h ? h + 'h ' + m + 'm' : m + 'm';
+}
+function stateFor(d){ if (d.total >= d.capacity) return 'full'; return d.total / d.capacity >= 0.8 ? 'busy' : 'online'; }
+const stLabel = (s) => ({ online:t('online'), busy:t('almost'), full:t('full'), offline:t('offline'), checking:t('inspect') }[s]);
+
+const ICONS = {
+  owner:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/>',
+  support:'<path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/>',
+  channel:'<path d="M4 4h16v12H8l-4 4z"/><path d="M8 9h8M8 12h5"/>',
+  github:'<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>',
+  host:'<rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.01M7 17.5h.01"/>',
+  tutorial:'<rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/>'
+};
+
+function applyStatic(){
+  const R = document.documentElement, ac = ACCENTS[accent];
+  const an = $('ann'), msg = ANNOUNCEMENT[lang] || ANNOUNCEMENT.en || '';
+  an.textContent = msg; an.classList.toggle('show', !!msg);
+  R.dataset.theme = theme; R.lang = lang; R.dir = RTL.includes(lang) ? 'rtl' : 'ltr';
+  R.style.setProperty('--a', ac[0]); R.style.setProperty('--on', ac[1]);
+  renderDots(); renderLangs();
+  document.querySelector('meta[name=theme-color]').content = getComputedStyle(document.body).backgroundColor;
+  document.querySelectorAll('[data-i]').forEach((el) => { el.textContent = t(el.dataset.i, { n: capacityHint() }); });
+  document.querySelectorAll('[data-ph]').forEach((el) => { el.placeholder = t(el.dataset.ph); });
+  if (!busy) $('go').textContent = t('btn');
+  const L = $('links'); L.innerHTML = '';
+  for (const k of ['host','owner','support','channel','github','tutorial']) {
+    if (k !== 'owner' && !LINKS[k]) continue;
+    let a;
+    if (k === 'owner') { a = document.createElement('button'); a.type = 'button'; a.addEventListener('click', openContact); }
+    else { a = document.createElement('a'); a.href = LINKS[k]; a.target = k === 'host' ? '_self' : '_blank'; a.rel = 'noopener noreferrer'; }
+    a.className = 'lk';
+    a.innerHTML = '<span><svg viewBox="0 0 24 24">' + ICONS[k] + '</svg></span><div></div>';
+    a.lastChild.textContent = k === 'owner' ? t('support') : k === 'support' ? 'Telegram' : t(k); L.appendChild(a);
+  }
+  renderServers(); renderStats(); renderResult();
+}
+
+function renderDots(){
+  const box = $('dots'); box.replaceChildren();
+  for (const [k, c] of Object.entries(ACCENTS)) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'dot'; b.style.background = c[0];
+    b.setAttribute('aria-label', t('accent') + ': ' + k); b.setAttribute('aria-pressed', String(k === accent));
+    b.addEventListener('click', () => { accent = k; ls.set('nexus_accent', k); applyStatic(); });
+    box.appendChild(b);
+  }
+}
+function renderLangs(){
+  const ul = $('langList'); ul.replaceChildren();
+  for (const [k, name] of Object.entries(LANGS)) {
+    const li = document.createElement('li'), b = document.createElement('button');
+    b.type = 'button'; b.textContent = name; b.setAttribute('aria-selected', String(k === lang));
+    b.addEventListener('click', () => { lang = k; ls.set('nexus_lang', k); ul.classList.remove('open'); applyStatic(); });
+    li.appendChild(b); ul.appendChild(li);
+  }
+}
+
+/* server list: ring with % + name + status (like the screenshot) */
+function renderServers(){
+  const s = cur(), st = stats[s.id];
+  $('srvName').textContent = (auto ? '⚡ ' + t('auto') + ' · ' : '') + s.name;
+  $('srvDot').className = 'sdot ' + st.state;
+  $('srvLine').textContent = st.total != null
+    ? t('active') + ': ' + st.total + ' / ' + t('limit') + ': ' + st.capacity + ' · ' + t('filled', { p: pctOf(st) })
+    : t('active') + ': -- / ' + t('limit') + ': --';
+  const list = $('srvList'); list.innerHTML = '';
+  { const li = document.createElement('li'), b = document.createElement('button');
+    b.type = 'button'; b.className = 'opt auto'; b.setAttribute('role','option'); b.setAttribute('aria-selected', String(auto));
+    b.textContent = '⚡ ' + t('auto');
+    b.addEventListener('click', () => { auto = true; ls.set('nexus_auto', '1'); const bs = best(); if (bs) selectedId = bs.id; closeList(); renderServers(); });
+    li.appendChild(b); list.appendChild(li); }
+  for (const sv of SERVERS) {
+    const x = stats[sv.id], pct = pctOf(x);
+    const li = document.createElement('li'), b = document.createElement('button');
+    b.type = 'button'; b.className = 'opt'; b.setAttribute('role','option'); b.setAttribute('aria-selected', String(!auto && sv.id === selectedId));
+    b.disabled = x.state === 'full' || x.state === 'offline';
+    b.innerHTML = '<div class="pie ' + x.state + '" style="--p:' + pct + '"><b></b></div>' +
+      '<div class="mid"><div class="r1"><span class="n"></span><em class="' + x.state + '">' + stLabel(x.state) + '</em></div><small class="l1"></small></div>';
+    b.querySelector('.pie b').textContent = pct + '%';
+    b.querySelector('.n').textContent = sv.name;
+    b.querySelector('.l1').textContent = x.total != null
+      ? x.total + ' / ' + x.capacity + ' ' + t('users') + ' · ' + x.online + ' ' + t('connected')
+      : t('nodata');
+    b.addEventListener('click', () => { auto = false; ls.set('nexus_auto', '0'); selectedId = sv.id; ls.set('nexus_server', sv.id); closeList(); renderServers(); });
+    li.appendChild(b); list.appendChild(li);
+  }
+}
+function closeList(){ $('srvList').classList.remove('open'); $('srvBtn').setAttribute('aria-expanded','false'); }
+$('srvBtn').addEventListener('click', () => { const o = $('srvList').classList.toggle('open'); $('srvBtn').setAttribute('aria-expanded', String(o)); });
+
+function renderStats(){
+  const live = SERVERS.filter((s) => stats[s.id].total != null);
+  const sum = (k) => live.reduce((a, s) => a + (stats[s.id][k] || 0), 0);
+  $('stOnline').textContent = live.length ? num(sum('online')) : '--';
+  $('cust').innerHTML = '';
+  if (live.length) { const f = t('custLine', { a: '\u0001', b: '\u0002' }).split(/(\u0001|\u0002)/);
+    for (const part of f) { if (part === '\u0001' || part === '\u0002') { const b = document.createElement('b'); b.textContent = num(part === '\u0001' ? sum('total') : sum('online')); $('cust').appendChild(b); } else $('cust').appendChild(document.createTextNode(part)); } }
+  $('stDep').textContent = live.length ? num(sum('total')) : '--';
+  $('stViews').textContent = live.length ? num(sum('views')) : '--';
+  $('stPairs').textContent = live.length ? num(sum('pairs')) : '--';
+  const r = $('ready'), anyUp = SERVERS.some((s) => usable(s.id)), allWait = SERVERS.every((s) => stats[s.id].state === 'checking');
+  r.className = 'ready ' + (allWait ? 'wait' : anyUp ? '' : 'bad');
+  $('readyTxt').textContent = allWait ? t('checking') : anyUp ? t('ready') : t('none');
+}
+
+/* page view: the server counts a view whenever /webpair is opened.
+   We open it once per browser session on ONE server (best one), so the count is real and not x5.
+   Skipped when this page is already served by one of the servers (it was counted on load). */
+async function countView(){
+  try { if (sessionStorage.getItem('pm_hit')) return; } catch (_) {}
+  if (SERVERS.some((s) => apiOf(s) === location.origin)) return;
+  const sv = best() || SERVERS.find((s) => usable(s.id)); if (!sv) return;
+  try { sessionStorage.setItem('pm_hit', '1'); } catch (_) {}
+  try { await fetch(apiOf(sv) + '/webpair', { mode:'no-cors', cache:'no-store', signal: AbortSignal.timeout(10000) }); setTimeout(() => loadStats(true), 1200); } catch (_) {}
+}
+
+async function loadStats(skipHit){
+  await Promise.all(SERVERS.map(async (s) => {
+    try {
+      const r = await fetch(apiOf(s) + '/api/stats', { cache: 'no-store', signal: AbortSignal.timeout(8000) });
+      if (!r.ok) throw 0;
+      const d = await r.json();
+      stats[s.id] = { state: stateFor(d), total: d.total, online: d.online, capacity: d.capacity, views: d.views, pairs: d.pairs, uptime: d.uptime ?? d.uptimeSeconds };
+    } catch (_) { stats[s.id] = { state: 'offline' }; }
+  }));
+  if (auto) { const bs = best(); if (bs) selectedId = bs.id; }
+  if (!usable(selectedId)) { const alt = SERVERS.find((s) => usable(s.id)); if (alt) selectedId = alt.id; }
+  applyStatic();
+  if (!hitDone) { hitDone = true; countView(); }
+}
+
+function setResult(tk, bk, o = {}){ resState = { tk, bk, ...o }; renderResult(); }
+function renderResult(){
+  const box = $('res');
+  if (!resState) { box.classList.remove('show'); return; }
+  box.classList.add('show');
+  $('resT').textContent = t(resState.tk);
+  $('resB').textContent = resState.raw ?? t(resState.bk, resState.p || {});
+  $('resCode').textContent = resState.code || '';
+  $('resRow').style.display = resState.code ? 'flex' : 'none';
+  $('copyBtn').textContent = t('copy');
+}
+function startCountdown(){
+  clearInterval(cdTimer); let s = 60;
+  const tick = () => { $('resCd').textContent = s > 0 ? t('exp', { s }) : t('expired'); if (s-- <= 0) clearInterval(cdTimer); };
+  tick(); cdTimer = setInterval(tick, 1000);
+}
+$('copyBtn').addEventListener('click', async () => {
+  const c = resState?.code; if (!c) return;
+  try { await navigator.clipboard.writeText(c); $('copyBtn').textContent = t('copied'); setTimeout(() => ($('copyBtn').textContent = t('copy')), 1800); } catch (_) {}
+});
+function watchLinked(api, number){
+  clearInterval(pollTimer); let n = 0;
+  pollTimer = setInterval(async () => {
+    if (++n > 50) return clearInterval(pollTimer);
+    try {
+      const sr = await fetch(api + '/api/webpair/status?number=' + encodeURIComponent(number)), sd = await sr.json();
+      if (sd.status === 'already-paired') { clearInterval(pollTimer); clearInterval(cdTimer); setResult('linkedT','linkedB'); loadStats(); }
+    } catch (_) {}
+  }, 3000);
+}
+function done(label){ busy = false; $('go').disabled = false; $('go').textContent = t(label); }
+
+function candidates(){
+  const first = cur();
+  const rest = SERVERS.filter((s) => s.id !== first.id && usable(s.id) && stats[s.id].state !== 'full').sort((a, b) => loadOf(a) - loadOf(b));
+  return [first, ...rest];
+}
+
+async function attempt(server, number, my, maxPolls, pass){
+  const api = apiOf(server);
+  try {
+    const r = await fetch(api + '/api/webpair/start', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ number, pass }), signal: AbortSignal.timeout(15000) });
+    const d = await r.json().catch(() => ({}));
+    if (my !== runId) return { cancel: true };
+    if (!r.ok) return d.captcha ? { fail: true, captcha: true } : { fail: true, err: d.error };
+    d.status === 'recovering' ? setResult('recT','recB') : setResult('accT','accB');
+    let netErrs = 0;
+    for (let n = 1; n <= maxPolls; n++) {
+      await sleep(1500);
+      if (my !== runId) return { cancel: true };
+      let sr, sd;
+      try {
+        sr = await fetch(api + '/api/webpair/status?number=' + encodeURIComponent(number), { signal: AbortSignal.timeout(8000) });
+        sd = await sr.json(); netErrs = 0;
+      } catch (_) { if (++netErrs >= 4) return { fail: true }; continue; }
+      if (my !== runId) return { cancel: true };
+      if (sd.code) return { code: sd.code, api };
+      if (sd.status === 'already-paired') return { paired: true };
+      if (!sr.ok || sd.status === 'error') return { fail: true, err: sd.error };
+      if (sd.status === 'recovering') setResult('recT','recB');
+    }
+    return { fail: true };
+  } catch (e) { return { fail: true, err: e.message }; }
+}
+
+$('number').addEventListener('input', (e) => { const v = normDigits(e.target.value); if (v !== e.target.value) e.target.value = v; });
+$('pairForm').addEventListener('submit', async (e) => {
+  e.preventDefault(); clearInterval(pollTimer); clearInterval(cdTimer);
+  const number = normDigits($('number').value).replace(/\D/g, '');
+  if (!/^\d{7,15}$/.test(number)) { setResult('badNumT','badNumB'); return; }
+  if (!usable(selectedId)) { setResult('pickT','pickB'); return; }
+  const pass = await getPass();
+  if (pass === null) { setResult('humanT','humanB'); try { if (humanWidget !== null) turnstile.reset(humanWidget); } catch (_) {} return; }
+  const my = ++runId, list = candidates();
+  busy = true; $('go').disabled = true; $('go').textContent = t('busy');
+  let last = {};
+  for (let i = 0; i < list.length; i++) {
+    const sv = list[i];
+    if (i === 0) setResult('prepT','prepB',{ p:{ s: sv.name } });
+    else setResult('failoverT','failoverB',{ p:{ a: list[i - 1].name, b: sv.name } });
+    const res = await attempt(sv, number, my, i < list.length - 1 ? 30 : 60, pass);
+    if (res.cancel) return;
+    if (res.captcha) { humanPass = ''; try { turnstile.reset(humanWidget); } catch (_) {} setResult('humanT','humanB'); done('retry'); return; }
+    if (res.code) {
+      selectedId = sv.id;
+      setResult('codeT','codeB',{ code: res.code }); startCountdown(); done('again'); loadStats(true); watchLinked(res.api, number); return;
+    }
+    if (res.paired) { setResult('pairedT','pairedB'); done('retry'); return; }
+    stats[sv.id] = { state: 'offline' };
+    renderServers();
+    last = res;
+  }
+  setResult('failT','failB', last.err ? { raw: last.err } : {});
+  done('retry'); loadStats(true);
+});
+
+/* ───────── SUPPORT FORM → bot server sends it to the owner's WhatsApp; wa.me only as fallback ───────── */
+const CC = [['255','Tanzania'],['254','Kenya'],['256','Uganda'],['250','Rwanda'],['257','Burundi'],['251','Ethiopia'],['252','Somalia'],['258','Mozambique'],['260','Zambia'],['243','DR Congo'],['263','Zimbabwe'],['27','South Africa'],['234','Nigeria'],['233','Ghana'],['237','Cameroon'],['20','Egypt'],['212','Morocco'],['971','UAE'],['966','Saudi Arabia'],['91','India'],['92','Pakistan'],['880','Bangladesh'],['86','China'],['62','Indonesia'],['60','Malaysia'],['63','Philippines'],['61','Australia'],['1','USA / Canada'],['44','United Kingdom'],['49','Germany'],['33','France'],['39','Italy'],['34','Spain'],['31','Netherlands'],['55','Brazil'],['52','Mexico'],['7','Russia'],['90','Turkey']];
+function renderCC(){
+  const sel = $('cf_cc'), keep = sel.value || ls.get('pm_cc') || '255';
+  sel.replaceChildren();
+  for (const [code, name] of CC) { const o = document.createElement('option'); o.value = code; o.textContent = '+' + code + '  ' + name; sel.appendChild(o); }
+  sel.value = CC.some(([c]) => c === keep) ? keep : '255';
+}
+function openContact(){
+  renderCC();
+  $('cf_name').placeholder = t('cName'); $('cf_num').placeholder = t('cNum'); $('cf_msg').placeholder = t('cMsg');
+  $('cm').hidden = false; $('cf_st').textContent = ''; $('cf_st').className = 'st';
+  setTimeout(() => $('cf_msg').focus(), 50);
+}
+function closeContact(){ $('cm').hidden = true; }
+$('cf_x').addEventListener('click', closeContact);
+$('cm').addEventListener('click', (e) => { if (e.target === $('cm')) closeContact(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeContact(); });
+$('cf_num').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, ''); });
+$('cf').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const st = $('cf_st'), say = (k, c) => { st.textContent = t(k); st.className = 'st ' + (c || ''); };
+  if ($('cf_web').value) { say('cSent', 'ok'); return; }                       // honeypot: bots fill this, ignore
+  const msg = $('cf_msg').value.trim().slice(0, 500), name = $('cf_name').value.trim().slice(0, 40);
+  const cc = $('cf_cc').value;
+  let local = $('cf_num').value.replace(/\D/g, '').replace(/^0+/, '');
+  if (local.startsWith(cc) && local.length > cc.length + 6) local = local.slice(cc.length);   // user typed the code already
+  const full = local ? cc + local : '';
+  if (msg.length < 5) { say('cShort', 'err'); return; }
+  if (full && !/^\d{7,15}$/.test(full)) { say('cNumBad', 'err'); return; }
+  if (Date.now() - (+ls.get('pm_last') || 0) < CONTACT_COOLDOWN_MS) { say('cWait', 'err'); return; }
+  const pass = await getPass();
+  if (pass === null) { say('humanB', 'err'); return; }          // solve the check on the main page first
+  const btn = $('cf_go'); btn.disabled = true; say('cSending');
+  ls.set('pm_cc', cc);
+
+  // 1) the bot server sends it to the owner's WhatsApp; the visitor never leaves this page
+  const first = best();
+  const order = [first, ...SERVERS.filter((s) => usable(s.id) && (!first || s.id !== first.id))].filter(Boolean);
+  let ok = false, status = 0;
+  for (const sv of order) {
+    try {
+      const r = await fetch(sv.url.replace(/\/$/, '') + '/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, number: full, message: msg, pass }), signal: AbortSignal.timeout(15000) });
+      status = r.status;
+      if (r.ok) { ok = true; break; }
+      if (r.status === 429) break;                                                // spam guard: stop here
+    } catch (_) {}
+  }
+  btn.disabled = false;
+  if (ok) { ls.set('pm_last', String(Date.now())); $('cf_msg').value = ''; say('cSent', 'ok'); return; }
+  if (status === 429) { say('cWait', 'err'); return; }
+
+  // 2) fallback when no server can deliver: open WhatsApp with the message ready
+  const lines = ['📩 PRINCE MINI · ' + t('support'), name ? '👤 ' + name : null, full ? '📞 +' + full : null, '', msg].filter((x) => x !== null);
+  const url = 'https://wa.me/' + OWNER_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+  const w = window.open(url, '_blank');
+  if (w) { try { w.opener = null; } catch (_) {} } else { location.href = url; }
+  ls.set('pm_last', String(Date.now())); $('cf_msg').value = ''; say('cSent', 'ok');
+});
+
+$('langBtn').addEventListener('click', (e) => { e.stopPropagation(); $('langList').classList.toggle('open'); });
+document.addEventListener('click', () => $('langList').classList.remove('open'));
+$('modeBtn').addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; ls.set('nexus_theme', theme); applyStatic(); });
+{ const lg = $('logo'); let k = 0; lg.addEventListener('error', () => { if (k < SERVERS.length) lg.src = apiOf(SERVERS[k++]) + '/assets/logo.jpg'; }); }
+$('year').textContent = new Date().getFullYear();
+$('number').value = '';
+applyStatic(); loadStats(); setInterval(() => loadStats(true), REFRESH_MS);
+</script></body></html>
