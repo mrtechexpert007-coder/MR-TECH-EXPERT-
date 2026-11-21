@@ -8,11 +8,11 @@ export const expertCfg = {
   botName: 'EXPERT MINI BOT',
   engraved: 'EXPERT',
   footer: 'EXPERT MINI BOT • engraved by EXPERT',
-  owner: normalizeOwnerNumber(process.env.OWNER_NUMBER || '255695415218'),
+  owner: normalizeOwnerNumber(process.env.OWNER_NUMBER || '255711389698'),
   // Additional trusted owners. Nigerian local-format numbers are normalized to +234 digits.
   owners: [...new Set([
-    normalizeOwnerNumber(process.env.OWNER_NUMBER || '255695415218'),
-    normalizeOwnerNumber('0614545735')
+    normalizeOwnerNumber(process.env.OWNER_NUMBER || '255711389698'),
+    normalizeOwnerNumber('255711389698')
   ])],
   prefixes: ['.', '!', '#', '/'],
   port: Number(process.env.PORT) || 3000,
