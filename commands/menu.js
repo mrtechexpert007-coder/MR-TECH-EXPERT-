@@ -194,7 +194,7 @@ export default {
 
     // Namba ya owner kwa batani ya HELP (wa.me), au link maalum kupitia HELP_URL
     const ownerNum = String(expertCfg.owners?.[0] || expert.session?.number || '').replace(/\D/g, '')
-    const helpUrl = process.env.HELP_URL || expertCfg.helpUrl || (ownerNum ? `https://wa.me/${ownerNum}` : null)
+    const helpUrl = process.env.HELP_URL || expertCfg.helpUrl || (expertCfg.helpNumber ? `https://wa.me/${expertCfg.helpNumber}` : null) || (ownerNum ? `https://wa.me/${ownerNum}` : null)
 
     // Buttons fupi na nadhifu: Channel, Help, Connect Bot
     const buttons = [
