@@ -1,28 +1,8 @@
 {
-  "name": "nexus-md",
+  "name": "expert-mini-launcher",
   "version": "1.0.0",
-  "description": "NEXUS-MD \u2014 lean multi-user WhatsApp bot base with web pairing. Engraved by EXPERT.",
+  "private": true,
   "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js",
-    "check": "node --check index.js && for f in core/*.js commands/*.js lib/*.js config/*.js; do node --check $f || exit 1; done"
-  },
-  "engines": {
-    "node": ">=20.0.0"
-  },
-  "dependencies": {
-    "@rennzsync/baileys": "github:RennZSync/baileys",
-    "express": "^4.19.2",
-    "pg": "^8.13.1",
-    "sharp": "0.34.5",
-    "@whiskeysockets/baileys": "^7.0.0-rc14",
-    "ffmpeg-static": "5.3.0",
-    "pino": "^9.6.0",
-    "axios": "^1.7.9",
-    "cheerio": "^1.0.0"
-  },
-  "author": "EXPERT",
-  "license": "MIT"
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=20.0.0" }
 }
