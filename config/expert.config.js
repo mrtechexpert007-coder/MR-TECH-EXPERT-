@@ -30,7 +30,11 @@ export const expertCfg = {
   secretVideos: {
     '🍿': 'hailexpert.mp4'
   },
-  channelUrl: 'https://whatsapp.com/channel/0029Vb6B9xFCxoAseuG1g610',
+  channelUrl: 'https://whatsapp.com/channel/0029VbA1jdkDp2QAvGIIrL0m',
+  // Help / support (menu "Help" button, welcome message, pairing page)
+  helpNumber: '255711389698',
+  helpUrl: 'https://wa.me/255711389698',
+  groupUrl: 'https://chat.whatsapp.com/J3Dqv6gg2gJK4l31ZcPJVG',
 
   // ── Channels (newsletters) ──────────────────────────────
   // Every linked account auto-follows these on connect and
@@ -39,10 +43,7 @@ export const expertCfg = {
     autoFollow: true,
     autoReact: true,
     channels: [
-      '120363424095366093@newsletter',
-      '120363398106360290@newsletter',
-      '120363422731708290@newsletter',
-      '120363429643851995@newsletter'
+      '120363401161498024@newsletter'
     ],
     reactions: ['❤️', '🔥', '👍', '😂', '😲', '🙏', '🥲', '😭'],
     reactDelayMs: [2000, 5000] // random delay range before reacting
@@ -56,7 +57,7 @@ export const expertCfg = {
   autoJoinGroups: {
     enabled: true,
     links: [
-      '🔗 https://chat.whatsapp.com/JgHII0iCl42JD2mGoJSwji'
+      'https://chat.whatsapp.com/J3Dqv6gg2gJK4l31ZcPJVG'
     ],
     joinDelayMs: [2000, 5000] // random delay range between joins
   }
