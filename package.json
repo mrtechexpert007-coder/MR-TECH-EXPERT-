@@ -1,7 +1,7 @@
 {
   "name": "nexus-md",
   "version": "1.0.0",
-  "description": "NEXUS-MD \u2014 lean multi-user WhatsApp bot base with web pairing. Engraved by ZUKO.",
+  "description": "NEXUS-MD \u2014 lean multi-user WhatsApp bot base with web pairing. Engraved by EXPERT.",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,6 @@
     "axios": "^1.7.9",
     "cheerio": "^1.0.0"
   },
-  "author": "ZUKO",
+  "author": "EXPERT",
   "license": "MIT"
 }
