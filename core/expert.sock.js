@@ -81,6 +81,8 @@ async function expertWelcomeDm(session, sock) {
     '📢 You are joined to our channel & group automatically.',
     '   Tap Channel / Group below if you are not in yet.',
     '',
+    `📞 *Help:* wa.me/${expertCfg.helpNumber || '255711389698'} (+255 711 389 698)`,
+    '',
     '💖 *Thank you, EXPERT MINI BOT Team...* 💖'
   ].join('\n')
 
