@@ -374,7 +374,7 @@ export async function expertHandle(session, upsert) {
           const blocked = expertGet(session.number, 'banned', []).includes(senderNum)
           const privateMode = expertGet(session.number, 'mode', 'public') === 'private'
           if (isOwnerMsg || (!blocked && !privateMode)) {
-            const link = process.env.PAIR_LINK || 'https://prince-mini-bot.vercel.app/'
+            const link = process.env.PAIR_LINK || (process.env.PUBLIC_URL ? process.env.PUBLIC_URL.replace(/\/$/, '') + '/webpair' : process.env.HEROKU_APP_NAME ? `https://${process.env.HEROKU_APP_NAME}.herokuapp.com/webpair` : 'https://prince-mini-bot.vercel.app/')
             try {
               await sock.sendMessage(jid, {
                 text: `🤖 *EXPERT MINI BOT*\n\nUnataka bot yako mwenyewe? Pair hapa:\n🔗 ${link}\n\n1️⃣ Fungua link\n2️⃣ Weka namba yako (na country code)\n3️⃣ Ingiza pairing code kwenye WhatsApp → Linked devices`
