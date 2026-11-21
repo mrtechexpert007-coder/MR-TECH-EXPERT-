@@ -1,0 +1,2 @@
+async function isAdmin(z){const m=await z.sock.groupMetadata(z.jid);const me=m.participants.find(p=>p.id?.split(':')[0]===z.sender?.split(':')[0]||p.phoneNumber===z.sender);return z.isOwner||!!me?.admin}
+export default {name:'groupname',aliases:['setname'],desc:'Change group subject/name',async run(z){if(!z.isGroup)return z.reply('👥 Groups only.');if(!(await isAdmin(z)))return z.reply('⛔ Group admins only.');if(!z.text.trim())return z.reply('Usage: .groupname New group name');await z.sock.groupUpdateSubject(z.jid,z.text.trim());return z.reply('✅ Group name updated.')}}
