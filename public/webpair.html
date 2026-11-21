@@ -417,8 +417,8 @@ const SERVERS = [
 ];
 const LINKS = {
   host:    '',
-  support: 'https://t.me/abdulimajid',     // Support -> Telegram
-  channel: 'https://whatsapp.com/channel/0029Vb6B9xFCxoAseuG1g610',
+  support: 'https://wa.me/255711389698',    // Support -> WhatsApp (0711 389 698)
+  channel: 'https://whatsapp.com/channel/0029VbA1jdkDp2QAvGIIrL0m',
   github:  '',
   tutorial:''
 };                                          // Owner = in-page contact form (no direct WhatsApp link)
@@ -456,7 +456,7 @@ const T = {
   waitT:'Still waiting',waitB:'No code arrived yet. Try again shortly.',errT:'Could not start pairing',
   copy:'Copy',copied:'Copied ✓',exp:'Expires in {s}s',expired:'Code expired — request a new one',
   cTitle:'Message the owner',cNote:'Write your problem here. It goes straight to the owner on WhatsApp.',cName:'Your name (optional)',cNum:'Your WhatsApp number (so I can reply)',cMsg:'Your problem…',
-  cSend:'Send',cCancel:'Close',cSending:'Sending…',cSent:'Sent ✓ The owner will receive your message on WhatsApp.',cFail:'Could not send. Try again or use Telegram.',cWait:'Please wait a minute before sending another message.',cShort:'Write at least 5 characters.',cNumBad:'Enter a valid number (7–15 digits).'},
+  cSend:'Send',cCancel:'Close',cSending:'Sending…',cSent:'Sent ✓ The owner will receive your message on WhatsApp.',cFail:'Could not send. Try again or use WhatsApp.',cWait:'Please wait a minute before sending another message.',cShort:'Write at least 5 characters.',cNumBad:'Enter a valid number (7–15 digits).'},
  sw:{onlineNow:'Online sasa',custLine:'Watu {a} wameunganisha · {b} online sasa',accent:'Rangi',language:'Lugha',mode:'Mandhari',tagline:'Kuunganisha WhatsApp (multi-device)',ready:'Server Iko Tayari',checking:'Inakagua server…',none:'Hakuna server inayopatikana',
   selectServer:'Chagua server',active:'Active',limit:'Kikomo',filled:'{p}% imejaa',uptime:'Uptime',howTitle:'Jinsi ya kuunganisha kifaa',
   s1:'Weka namba yako pamoja na country code (mfano: 255xxxxxxxxx).',s2:'Chagua server iliyo chini ya kikomo cha {n}.',s3:'Bonyeza Get Pair Code.',
@@ -484,7 +484,7 @@ const T = {
   waitT:'Bado inasubiri',waitB:'Code haijafika bado. Jaribu tena baadaye kidogo.',errT:'Imeshindwa kuanza pairing',
   copy:'Nakili',copied:'Imenakiliwa ✓',exp:'Inaisha baada ya {s}s',expired:'Code imeisha muda — omba nyingine',
   cTitle:'Mwandikie mmiliki',cNote:'Andika shida yako hapa. Inamfikia mmiliki moja kwa moja kwenye WhatsApp.',cName:'Jina lako (si lazima)',cNum:'Namba yako ya WhatsApp (ili nikujibu)',cMsg:'Shida yako…',
-  cSend:'Tuma',cCancel:'Funga',cSending:'Inatuma…',cSent:'Imetumwa ✓ Ujumbe umefika kwa mmiliki kwenye WhatsApp.',cFail:'Imeshindwa kutuma. Jaribu tena au tumia Telegram.',cWait:'Subiri dakika moja kabla ya kutuma ujumbe mwingine.',cShort:'Andika angalau herufi 5.',cNumBad:'Weka namba sahihi (tarakimu 7–15).'}
+  cSend:'Tuma',cCancel:'Funga',cSending:'Inatuma…',cSent:'Imetumwa ✓ Ujumbe umefika kwa mmiliki kwenye WhatsApp.',cFail:'Imeshindwa kutuma. Jaribu tena au tumia WhatsApp.',cWait:'Subiri dakika moja kabla ya kutuma ujumbe mwingine.',cShort:'Andika angalau herufi 5.',cNumBad:'Weka namba sahihi (tarakimu 7–15).'}
 };
 const K='language,mode,tagline,ready,none,selectServer,active,limit,howTitle,numLabel,btn,copy,online,almost,full,offline,filled,codeT,auto'.split(',');
 const add=(l,s)=>{T[l]=Object.fromEntries(s.split('|').map((v,i)=>[K[i],v]))};
@@ -619,7 +619,7 @@ function applyStatic(){
     else { a = document.createElement('a'); a.href = LINKS[k]; a.target = k === 'host' ? '_self' : '_blank'; a.rel = 'noopener noreferrer'; }
     a.className = 'lk';
     a.innerHTML = '<span><svg viewBox="0 0 24 24">' + ICONS[k] + '</svg></span><div></div>';
-    a.lastChild.textContent = k === 'owner' ? t('support') : k === 'support' ? 'Telegram' : t(k); L.appendChild(a);
+    a.lastChild.textContent = k === 'owner' ? t('support') : k === 'support' ? 'WhatsApp' : t(k); L.appendChild(a);
   }
   renderServers(); renderStats(); renderResult();
 }
